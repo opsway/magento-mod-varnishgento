@@ -1,0 +1,29 @@
+<br/>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3><?php echo Mage::helper('adminhtml')->__('Varnish Cache Management') ?></h3></td><td class="form-buttons"></td>
+         </tr>
+    </table>
+</div>
+<form action="<?php echo $this->getFlushVarnishUrl()?>" method="get">
+    <table class="form-list">
+        <tr>
+            <td class="scope-label">
+                <?php /* <button onclick="setLocation('<?php echo $this->getCleanMediaUrl()?>')" type="button" class="scalable"><span><?php echo Mage::helper('adminhtml')->__('Flush JavaScript/CSS Cache') ?></span></button> */ ?>
+                <input type="text" name="purge_url" style="width:500px;"/>
+            </td>
+            <td class="scope-label">
+                <?php echo Mage::helper('adminhtml')->__('URLs to purge, separate with comma (flush all if empty)')?>
+            </td>
+        </tr>
+        <tr>
+            <td class="scope-label">
+                <button type="submit" class="scalable"><span><?php echo Mage::helper('adminhtml')->__('Flush Varnish Cache') ?></span></button>
+            </td>
+            <td class="scope-label">
+            </td>
+        </tr>
+        
+    </table>
+</form>
