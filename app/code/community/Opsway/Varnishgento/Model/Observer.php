@@ -94,11 +94,12 @@ class Opsway_Varnishgento_Model_Observer
          * @var $controller Mage_Core_Controller_Varien_Front
          */
         $controller = $observer->getEvent()->getFront();
-
-        $controller->getResponse()->setHeader(
-            Opsway_Varnishgento_Model_Processor::CACHE_HEADER_NAME,
-            Mage::getSingleton('opsway_varnishgento/processor')->getCacheHeader($this->_skipCatalogTags)
-        );
+        if ($controller->getResponse()->canSendHeaders()){
+            $controller->getResponse()->setHeader(
+                Opsway_Varnishgento_Model_Processor::CACHE_HEADER_NAME,
+                Mage::getSingleton('opsway_varnishgento/processor')->getCacheHeader($this->_skipCatalogTags)
+            );
+        }
 
     }
 
