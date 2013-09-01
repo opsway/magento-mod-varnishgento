@@ -18,19 +18,7 @@ class Opsway_Varnishgento_Model_Index_Process extends Mage_Index_Model_Process
      */
     public function reindexAll()
     {
-        if ($this->isLocked()) {
-            Mage::throwException(
-                Mage::helper('index')->__(
-                    '%s Index process is working now. Please try run this process later.',
-                    $this->getIndexer()->getName()
-                )
-            );
-        }
-        $this->_getResource()->startProcess($this);
-        $this->lock();
-        $this->getIndexer()->reindexAll();
-        $this->unlock();
-        $this->_getResource()->endProcess($this);
+        parent::reindexAll();
 
         if (Mage::getStoreConfig('opsway_varnishgento/general/flushall') == 1) {
             // Send event to varnigento to clean pages
