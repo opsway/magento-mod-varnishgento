@@ -273,6 +273,9 @@ class Opsway_Varnishgento_Model_Observer
 
             $outOfStockProductIds = array();
             foreach ($order->getItemsCollection() as $item) {
+                if ($item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) {
+                    continue;
+                }
                 $stockQty = (int)Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProductId())->getQty();
                 if ($stockQty == 0) {
                     $outOfStockProductIds[] = $item->getProductId();
