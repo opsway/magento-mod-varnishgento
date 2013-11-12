@@ -255,7 +255,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
      */
     public function purgeByUrl($url)
     {
-        $this->_put($this->_purge_command.".url {$url}", true);
+        $this->_put($this->_purge_command.'.url ^'.$url.'$', true);
     }
 
     /**
