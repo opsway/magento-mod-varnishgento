@@ -37,6 +37,8 @@ class Opsway_Varnishgento_Model_Processor
     const CATALOG_CATEGORY_TAG_PREFIX_SHORT = 'CT_';
     const TOP_LEVEL_CATALOG_ARRAY = 'VARNIGENTO_TOP_LEVEL_CATALOG_ARRAY';
 
+    const FLUSH_ALL_PATTERN = '.*';
+
     /**
      * Tags separator in the cache tags
      */

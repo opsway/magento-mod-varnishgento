@@ -18,9 +18,9 @@ class Opsway_Varnishgento_Adminhtml_CacheController extends Mage_Adminhtml_Cache
     public function flushVarnishAction()
     {
         try {
-            $url = $this->getRequest()->getParam('purge_url');
+            $url = urldecode($this->getRequest()->getParam('purge_url',''));
             $url = str_replace('?','.',$url);
-            Mage::helper('opsway_varnishgento')->flushByUrlManually(trim($url)?$url:".*");
+            Mage::helper('opsway_varnishgento')->flushByUrlManually(trim($url) ? $url : OpsWay_Varnishgento_Model_Processor::FLUSH_ALL_PATTERN);
             $url = trim($url)?$url:'All';
         	$this->_getSession()->addSuccess(Mage::helper('adminhtml')->__("Varnish cache has been flushed. Frontal caches (%s) will be updated in several minutes", $url));
         } catch (Exception $e) {
