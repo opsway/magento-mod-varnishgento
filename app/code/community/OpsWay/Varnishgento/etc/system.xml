@@ -87,6 +87,15 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </flushall>
+                        <exception_tags translate="label">
+                            <label>Exception tags for purge</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Comma separate: "TAG1,TAG2,etc"</comment>
+                        </exception_tags>
                         <debug translate="label">
                             <label>Debug</label>
                             <source_model>adminhtml/system_config_source_yesno</source_model>

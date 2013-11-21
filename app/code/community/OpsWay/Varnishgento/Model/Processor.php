@@ -62,6 +62,8 @@ class OpsWay_Varnishgento_Model_Processor
      */
     protected $_exceptionBlockStock = array();
 
+    protected $_exceptionTagsList = null;
+
     /**
      * The list of cache tags on page
      * @var array
@@ -119,6 +121,12 @@ class OpsWay_Varnishgento_Model_Processor
             $tag = $this->_getCacheTagShortcut($tag);
         }
         unset($tag);
+
+        $tagsToClean = $this->filterTags($tagsToClean);
+        if (empty($tagsToClean)) {
+            return;
+        }
+
         if (!Mage::getStoreConfig('opsway_varnishgento/general/asynchronous_flush')) {
             try {
                 $this->purgeTags($tagsToClean);
@@ -133,6 +141,28 @@ class OpsWay_Varnishgento_Model_Processor
         } else {
             $this->addTagsToQueue($tagsToClean);
         }
+    }
+
+    public function filterTags($tags)
+    {
+        if ($this->_exceptionTagsList === null){
+            $configTags = trim(Mage::getStoreConfig('opsway_varnishgento/general/exception_tags'));
+            if ($configTags != ''){
+                $this->_exceptionTagsList = explode(",",$configTags);
+            } else {
+                $this->_exceptionTagsList = array();
+            }
+        }
+        if (empty($this->_exceptionTagsList)){
+            return $tags;
+        }
+        return array_udiff($tags,$this->_exceptionTagsList,function($tag,$exTag){
+                if (stripos($tag,$exTag) === 0){
+                    return 0;
+                } else {
+                    return (stripos($tag,$exTag) === false) ? 1 : -1;
+                }
+            });
     }
 
     /**
