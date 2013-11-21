@@ -25,7 +25,7 @@ class OpsWay_Shell_Varnishgento extends Mage_Shell_Abstract
                 return;
             }
             $processor->purgeTags($tagsToClean);
-
+            Mage::dispatchEvent( 'splunk_log_default', array('metric' => 'varnishgento.flush_tags', 'value' => count($tagsToClean)) );
         } catch (OpsWay_Varnishgento_Model_Connector_Exception $e) {
             Mage::log(
                 Mage::helper('opsway_varnishgento')->__('Error during cache clean. Reason: %s', $e->getMessage()),
@@ -50,6 +50,11 @@ class OpsWay_Shell_Varnishgento extends Mage_Shell_Abstract
                 if ($row['purge_url']) {
                     try{
                         $processor->purgeUrls(explode(",", $row['purge_url']));
+                        if ($row['purge_url'] == OpsWay_Varnishgento_Model_Processor::FLUSH_ALL_PATTERN){
+                            Mage::dispatchEvent( 'splunk_log_default', array('metric' => 'varnishgento.flush_all', 'value' => 1) );
+                        } else {
+                            Mage::dispatchEvent( 'splunk_log_default', array('metric' => 'varnishgento.flush_url', 'value' => 1) );
+                        }
                     }catch (Exception $e){
                         Mage::logException($e);
                     }
