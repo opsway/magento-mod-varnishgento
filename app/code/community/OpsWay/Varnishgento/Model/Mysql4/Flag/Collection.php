@@ -52,4 +52,14 @@ class OpsWay_Varnishgento_Model_Mysql4_Flag_Collection extends Mage_Core_Model_M
         return $this->count() > 0;
     }
 
+    public function isFlushAllActive(){
+        if (!$this->isLoaded()) {
+            $this->addFieldToSelect(array('purge_url', 'flushed'))
+                 ->addFieldToFilter('flushed', array('eq', 0))
+                 ->addFieldToFilter('purge_url',array('eq',OpsWay_Varnishgento_Model_Processor::FLUSH_ALL_PATTERN));
+            $this->load();
+        }
+        return $this->count() > 0;
+    }
+
 }

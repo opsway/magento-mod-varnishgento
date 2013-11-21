@@ -117,6 +117,14 @@ class OpsWay_Varnishgento_Model_Processor
         if (empty($tagsToClean)) {
             return;
         }
+
+        if (Mage::helper('opsway_varnishgento')->checkLimitObjectToFlush($tagsToClean)){
+            return;
+        }
+        if (Mage::helper('opsway_varnishgento')->isFlushAllActive()){
+            return;
+        }
+
         foreach ($tagsToClean as &$tag) {
             $tag = $this->_getCacheTagShortcut($tag);
         }

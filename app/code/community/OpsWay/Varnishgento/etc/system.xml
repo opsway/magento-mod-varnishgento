@@ -96,11 +96,20 @@
                             <show_in_store>0</show_in_store>
                             <comment>Comma separate: "TAG1,TAG2,etc"</comment>
                         </exception_tags>
+                        <limit_to_flush translate="label">
+                            <label>Limit to flush tags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>For once request</comment>
+                        </limit_to_flush>
                         <debug translate="label">
                             <label>Debug</label>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <frontend_type>select</frontend_type>
-                            <sort_order>110</sort_order>
+                            <sort_order>210</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>

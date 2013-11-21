@@ -203,23 +203,45 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         return $this->_memcahcedServers;
     }
 
+    public function flushAll(){
+        $this->addUrlToFlush(OpsWay_Varnishgento_Model_Processor::FLUSH_ALL_PATTERN);
+    }
+
+    public function checkLimitObjectToFlush($objects)
+    {
+        if (count($objects) > (int)(Mage::getStoreConfig('opsway_varnishgento/general/limit_to_flush'))){
+            if (!$this->isFlushAllActive()){
+                $this->flushAll();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function isFlushAllActive()
+    {
+        return Mage::getModel('opsway_varnishgento/flag')->getCollection()->isFlushAllActive();
+    }
+
+    protected function addUrlToFlush($url,$iniciatorName = 'varnishgento',$iniciatorLogin = 'system'){
+        $flag = Mage::getModel('opsway_varnishgento/flag');
+        $data = array(
+            'set_on' => Mage::getSingleton('core/date')->gmtDate(),
+            'purge_url' => $url,
+            'flushed' => 0,
+            'iniciator_name' => $iniciatorName,
+            'iniciator_login' =>  $iniciatorLogin
+        );
+        $flag->setData($data);
+        $flag->save();
+    }
     /**
      * Add url to db table queue for flush
      * @param $url string
      */
     public function flushByUrlManually($url){
-            // Start flush varnish cache
-            $flag = Mage::getModel('opsway_varnishgento/flag');
-            $data = array(
-                'set_on' => Mage::getSingleton('core/date')->gmtDate(),
-                'purge_url' => $url,
-                'flushed' => 0,
-                'iniciator_name' => Mage::getSingleton('admin/session')->getUser()->getFirstname().' '. Mage::getSingleton('admin/session')->getUser()->getLastname(),
-                'iniciator_login' =>  Mage::getSingleton('admin/session')->getUser()->getUsername()
-            );
-            $flag->setData($data);
-            $flag->save();
-            // end flush  varnish cache
+        $name = Mage::getSingleton('admin/session')->getUser()->getFirstname().' '. Mage::getSingleton('admin/session')->getUser()->getLastname();
+        $this->addUrlToFlush($url,$name,Mage::getSingleton('admin/session')->getUser()->getUsername());
     }
 
     /**
@@ -262,6 +284,9 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
     public function refreshCacheForProduct(array $productIds)
     {
         if (count($productIds)>0) {
+            if ($this->checkLimitObjectToFlush($productIds)){
+                return;
+            }
             $tagsList = array();
             $productTagPath  = 'global/opsway_varnishgento/cache_tag_shortcuts/catalog_product/target';
             $categoryTagPath = 'global/opsway_varnishgento/cache_tag_shortcuts/catalog_category/target';
