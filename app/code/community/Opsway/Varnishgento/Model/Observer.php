@@ -2,13 +2,13 @@
 /**
  * Base observer model
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
-class Opsway_Varnishgento_Model_Observer
+class OpsWay_Varnishgento_Model_Observer
 {
     const XML_NODE_ALLOWED_CACHE = 'frontend/cache/varnishgento';
 
@@ -96,7 +96,7 @@ class Opsway_Varnishgento_Model_Observer
         $controller = $observer->getEvent()->getFront();
         if ($controller->getResponse()->canSendHeaders()){
             $controller->getResponse()->setHeader(
-                Opsway_Varnishgento_Model_Processor::CACHE_HEADER_NAME,
+                OpsWay_Varnishgento_Model_Processor::CACHE_HEADER_NAME,
                 Mage::getSingleton('opsway_varnishgento/processor')->getCacheHeader($this->_skipCatalogTags)
             );
         }

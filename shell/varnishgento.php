@@ -4,13 +4,13 @@ require_once 'abstract.php';
 /**
  * Script to flush varnish cache
  *
- * @category    Opsway
- * @package     Opsway_Shell
+ * @category    OpsWay
+ * @package     OpsWay_Shell
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
-class Opsway_Shell_Varnishgento extends Mage_Shell_Abstract
+class OpsWay_Shell_Varnishgento extends Mage_Shell_Abstract
 {
     /**
      * Run script for flushing varnish cache
@@ -26,7 +26,7 @@ class Opsway_Shell_Varnishgento extends Mage_Shell_Abstract
             }
             $processor->purgeTags($tagsToClean);
 
-        } catch (Opsway_Varnishgento_Model_Connector_Exception $e) {
+        } catch (OpsWay_Varnishgento_Model_Connector_Exception $e) {
             Mage::log(
                 Mage::helper('opsway_varnishgento')->__('Error during cache clean. Reason: %s', $e->getMessage()),
                 Zend_Log::ERR
@@ -39,7 +39,7 @@ class Opsway_Shell_Varnishgento extends Mage_Shell_Abstract
 
     /**
      * Flushing varnish cache by url from db table queue
-     * @param $processor Opsway_Varnishgento_Model_Processor
+     * @param $processor OpsWay_Varnishgento_Model_Processor
      */
     public function purgeUrls($processor)
     {
@@ -60,5 +60,5 @@ class Opsway_Shell_Varnishgento extends Mage_Shell_Abstract
     }
 }
 
-$shell = new Opsway_Shell_Varnishgento();
+$shell = new OpsWay_Shell_Varnishgento();
 $shell->run();

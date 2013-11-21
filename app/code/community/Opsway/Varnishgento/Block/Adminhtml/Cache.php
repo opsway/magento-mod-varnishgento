@@ -2,15 +2,15 @@
 /**
  * Block for varnish management section on cache admin page
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
 
 
-class Opsway_Varnishgento_Block_Adminhtml_Cache extends Mage_Adminhtml_Block_Cache
+class OpsWay_Varnishgento_Block_Adminhtml_Cache extends Mage_Adminhtml_Block_Cache
 {
     /**
      * Class constructor

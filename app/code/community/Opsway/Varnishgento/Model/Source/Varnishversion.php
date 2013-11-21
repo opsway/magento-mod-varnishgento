@@ -2,14 +2,14 @@
 /**
  * Used in creating options for Yes|No config value selection
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
 
-class Opsway_Varnishgento_Model_Source_Varnishversion
+class OpsWay_Varnishgento_Model_Source_Varnishversion
 {
 
     /**

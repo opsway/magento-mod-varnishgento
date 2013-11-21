@@ -2,14 +2,14 @@
 /**
  * Basic module helper
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
 
-class Opsway_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
+class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
      * Cache tags to attach to the page

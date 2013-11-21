@@ -1,43 +1,43 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <Opsway_Varnishgento>
+        <OpsWay_Varnishgento>
             <version>1.0.0</version>
-        </Opsway_Varnishgento>
+        </OpsWay_Varnishgento>
     </modules>
     <global>
         <helpers>
             <opsway_varnishgento>
-                <class>Opsway_Varnishgento_Helper</class>
+                <class>OpsWay_Varnishgento_Helper</class>
             </opsway_varnishgento>
         </helpers>
         <blocks>
             <opsway_varnishgento>
-                <class>Opsway_Varnishgento_Block</class>
+                <class>OpsWay_Varnishgento_Block</class>
             </opsway_varnishgento>
             <page>
                 <rewrite>
-                    <html>Opsway_Varnishgento_Block_Html</html>
+                    <html>OpsWay_Varnishgento_Block_Html</html>
                 </rewrite>
             </page>
             <adminhtml>
                 <rewrite>
-                    <cache>Opsway_Varnishgento_Block_Adminhtml_Cache</cache>
+                    <cache>OpsWay_Varnishgento_Block_Adminhtml_Cache</cache>
                  </rewrite>
             </adminhtml>
         </blocks>
         <models>
             <opsway_varnishgento>
-                <class>Opsway_Varnishgento_Model</class>
+                <class>OpsWay_Varnishgento_Model</class>
                 <resourceModel>opsway_varnishgento_mysql4</resourceModel>
             </opsway_varnishgento>
             <index>
                 <rewrite>
-                    <process>Opsway_Varnishgento_Model_Index_Process</process>
+                    <process>OpsWay_Varnishgento_Model_Index_Process</process>
                 </rewrite>
             </index>
             <opsway_varnishgento_mysql4>
-                <class>Opsway_Varnishgento_Model_Mysql4</class>
+                <class>OpsWay_Varnishgento_Model_Mysql4</class>
                 <entities>
                     <flag>
                         <table>varnishgento_flags</table>
@@ -48,7 +48,7 @@
         <resources>
             <opsway_varnishgento_setup>
                 <setup>
-                    <module>Opsway_Varnishgento</module>
+                    <module>OpsWay_Varnishgento</module>
                 </setup>
                 <connection>
                     <use>core_setup</use>
@@ -80,7 +80,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Opsway_Varnishgento before="Mage_Adminhtml">Opsway_Varnishgento_Adminhtml</Opsway_Varnishgento>
+                        <OpsWay_Varnishgento before="Mage_Adminhtml">OpsWay_Varnishgento_Adminhtml</OpsWay_Varnishgento>
                     </modules>
                 </args>
             </adminhtml>

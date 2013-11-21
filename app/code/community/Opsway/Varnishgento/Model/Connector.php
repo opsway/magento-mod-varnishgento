@@ -2,13 +2,13 @@
 /**
  * Varnish cache connector
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
-class Opsway_Varnishgento_Model_Connector
+class OpsWay_Varnishgento_Model_Connector
 {
     /**
      * Lock identifier
@@ -40,7 +40,7 @@ class Opsway_Varnishgento_Model_Connector
                 }
                 $sockets[] = $socket;
             }
-        } catch (Opsway_Varnishgento_Model_Connector_Exception $e) {
+        } catch (OpsWay_Varnishgento_Model_Connector_Exception $e) {
             Mage::log($e->getMessage(), Zend_Log::ERR);
             return false;
         } catch (Exception $e) {

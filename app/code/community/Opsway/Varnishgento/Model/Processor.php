@@ -2,13 +2,13 @@
 /**
  * Varnish cache processor
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
-class Opsway_Varnishgento_Model_Processor
+class OpsWay_Varnishgento_Model_Processor
 {
     /**
      * Cache header name
@@ -122,7 +122,7 @@ class Opsway_Varnishgento_Model_Processor
         if (!Mage::getStoreConfig('opsway_varnishgento/general/asynchronous_flush')) {
             try {
                 $this->purgeTags($tagsToClean);
-            } catch (Opsway_Varnishgento_Model_Connector_Exception $e) {
+            } catch (OpsWay_Varnishgento_Model_Connector_Exception $e) {
                 Mage::log(
                     Mage::helper('opsway_varnishgento')->__('Error during cache clean. Reason: %s', $e->getMessage()),
                     Zend_Log::ERR
@@ -139,13 +139,13 @@ class Opsway_Varnishgento_Model_Processor
      *
      * Purge varnish cache by specified tags
      * @param array $tags
-     * @throws Opsway_Varnishgento_Model_Connector_Exception
+     * @throws OpsWay_Varnishgento_Model_Connector_Exception
      */
     public function purgeTags($tags)
     {
         $connector = Mage::getSingleton('opsway_varnishgento/connector');
         if ($connector->isLocked()) {
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Connector is locked')
             );
         }
@@ -377,14 +377,14 @@ class Opsway_Varnishgento_Model_Processor
      * Purging varnish cache by url
      * @param $urls string
      *
-     * @throws Opsway_Varnishgento_Model_Connector_Exception
+     * @throws OpsWay_Varnishgento_Model_Connector_Exception
      * @throws Exception
      */
     public function purgeUrls($urls)
     {
         $connector = Mage::getSingleton('opsway_varnishgento/connector');
         if ($connector->isLocked()) {
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Connector is locked')
             );
         }
@@ -413,7 +413,7 @@ class Opsway_Varnishgento_Model_Processor
     {
         $connector = Mage::getSingleton('opsway_varnishgento/connector');
         if ($connector->isLocked()) {
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Connector is locked')
             );
         }

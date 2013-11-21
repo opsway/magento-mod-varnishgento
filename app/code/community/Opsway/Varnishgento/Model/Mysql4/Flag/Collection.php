@@ -2,14 +2,14 @@
 /**
  * Mysql model collection for queue db table
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
 
-class Opsway_Varnishgento_Model_Mysql4_Flag_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class OpsWay_Varnishgento_Model_Mysql4_Flag_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
 	protected function _construct()
 	{

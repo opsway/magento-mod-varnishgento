@@ -2,13 +2,13 @@
 /**
  * Varnish socket
  *
- * @category Opsway
- * @package  Opsway_Varnishgento
+ * @category OpsWay
+ * @package  OpsWay_Varnishgento
  * @author   Ivan Shcherbakov <ivan.shcherbakov@smile.fr>
  * @author   Oleksandr Zirka <olzir@smile.fr>
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
-class Opsway_Varnishgento_Model_Connector_Socket
+class OpsWay_Varnishgento_Model_Connector_Socket
 {
     /**
      * Response code for successful request
@@ -59,12 +59,12 @@ class Opsway_Varnishgento_Model_Connector_Socket
     /**
      * Create and object and init a connection
      * @param array $server
-     * @throws Opsway_Varnishgento_Model_Connector_Exception
+     * @throws OpsWay_Varnishgento_Model_Connector_Exception
      */
     public function __construct($server)
     {
         if (!isset($server['host']) || !isset($server['port'])) {
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Parameters are invalid')
             );
         }
@@ -73,14 +73,14 @@ class Opsway_Varnishgento_Model_Connector_Socket
         $this->_handler = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if ($this->_handler === false) {
             $this->_logSocketErr($this->_handler, $host, 'socket_create');
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Could not create a socket')
             );
         }
         $result = socket_connect($this->_handler, $host, $port);
         if ($result === false) {
             $this->_logSocketErr($this->_handler, $host, 'socket_connect');
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Could not connect to %s:%s', $host, $port)
             );
         }
@@ -92,7 +92,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
             if ($response->code != self::RESPONSE_CODE_OK) {
                 if ($response->code == self::RESPONSE_CODE_AUTH_REQUIRED) {
                     if (!isset($server['secret'])) {
-                        throw new Opsway_Varnishgento_Model_Connector_Exception(
+                        throw new OpsWay_Varnishgento_Model_Connector_Exception(
                             Mage::helper('opsway_varnishgento')->__(
                                 'Authentification required at %s:%s. Secret is not set',
                                 $host,
@@ -106,7 +106,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
                     $this->_authenticate($challenge);
                     $authetificationResponse = $this->_popLastResponse();
                     if ($authetificationResponse->code != self::RESPONSE_CODE_OK) {
-                        throw new Opsway_Varnishgento_Model_Connector_Exception(
+                        throw new OpsWay_Varnishgento_Model_Connector_Exception(
                             Mage::helper('opsway_varnishgento')->__(
                                 'Authentification failed at %s:%s',
                                 $host,
@@ -115,7 +115,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
                         );
                     }
                 } else {
-                    throw new Opsway_Varnishgento_Model_Connector_Exception(
+                    throw new OpsWay_Varnishgento_Model_Connector_Exception(
                         Mage::helper('opsway_varnishgento')->__(
                             'Could not retrive an information at %s:%s. Unknown response code %s',
                             $host,
@@ -172,7 +172,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
      * Put a command
      * @param string $command
      * @return stdClass response
-     * @throws Opsway_Varnishgento_Model_Connector_Exception
+     * @throws OpsWay_Varnishgento_Model_Connector_Exception
      */
     protected function _put($command, $checkResponse = false)
     {
@@ -180,7 +180,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
         $command .= "\n";
         if ((socket_write($this->_handler, $command, strlen($command))) === false) {
             $this->_logSocketErr($this->_handler, $this->_host, 'socket_write');
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Unable to send a command to %s', $this->_host)
             );
         }
@@ -193,7 +193,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
                     $this->_host
                 );
                 $this->_log('['.$this->_host.']'.$message."\n".'Reason: '.trim($response->body, "\n"), Zend_Log::ERR);
-                throw new Opsway_Varnishgento_Model_Connector_Exception($message);
+                throw new OpsWay_Varnishgento_Model_Connector_Exception($message);
             }
         }
         $this->_log('OK', Zend_Log::INFO);
@@ -202,14 +202,14 @@ class Opsway_Varnishgento_Model_Connector_Socket
     /**
      * Pop the last socket response
      * @return stdClass
-     * @throws Opsway_Varnishgento_Model_Connector_Exception
+     * @throws OpsWay_Varnishgento_Model_Connector_Exception
      */
     protected function _popLastResponse()
     {
         $rawResponse = socket_read($this->_handler, 12 + 1);
         if ($rawResponse === false) {
             $this->_logSocketErr($this->_handler, $this->_host, 'socket_read');
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Error during result processing on %s', $this->_host)
             );
         }
@@ -217,7 +217,7 @@ class Opsway_Varnishgento_Model_Connector_Socket
         $rawResponse = socket_read($this->_handler, $params[1] + 1);
         if ($rawResponse === false) {
             $this->_logSocketErr($this->_handler, $this->_host, 'socket_read');
-            throw new Opsway_Varnishgento_Model_Connector_Exception(
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
                 Mage::helper('opsway_varnishgento')->__('Error during result processing on %s', $this->_host)
             );
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <config>
 	<modules>
-		<Opsway_Varnishgento>
+		<OpsWay_Varnishgento>
 			<active>true</active>
 			<codePool>community</codePool>
-		</Opsway_Varnishgento>
+		</OpsWay_Varnishgento>
 	</modules>
 </config>
