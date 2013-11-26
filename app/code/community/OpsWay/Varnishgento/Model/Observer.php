@@ -194,8 +194,16 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive()) {
             return;
         }
-        $productId = $observer->getEvent()->getItem()->getProductId();
-        Mage::helper('opsway_varnishgento')->refreshCacheForProduct(array($productId));
+        /**
+        * @var $itemStock Mage_CatalogInventory_Model_Stock_Item
+        */
+        $itemStock = $observer->getEvent()->getItem();
+        $hasChange = $itemStock->dataHasChangedFor('is_in_stock');
+        if ($hasChange) {
+            Mage::helper('opsway_varnishgento')->cleanCache(
+                Mage::helper('opsway_varnishgento')->convertIdsToTags( array($itemStock->getProductId()) )
+            );
+        }
 
     }
 

@@ -274,6 +274,15 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    public function convertIdsToTags(array $entityIds, $type = 'catalog_product')
+    {
+        $entityTagPrefix = Mage::app()->getConfig()->getNode("global/opsway_varnishgento/cache_tag_shortcuts/{$type}/target");
+
+        return array_map(function($t) use ($entityTagPrefix){
+                return "{$entityTagPrefix}_{$t}";
+            },$entityIds);
+    }
+
     /**
      * Refresh Varnish cache for defined products
      *
@@ -287,20 +296,11 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
             if ($this->checkLimitObjectToFlush($productIds)){
                 return;
             }
-            $tagsList = array();
-            $productTagPath  = 'global/opsway_varnishgento/cache_tag_shortcuts/catalog_product/target';
-            $categoryTagPath = 'global/opsway_varnishgento/cache_tag_shortcuts/catalog_category/target';
-            $productTagPrefix = Mage::app()->getConfig()->getNode($productTagPath);
-            $categoryTagPrefix = Mage::app()->getConfig()->getNode($categoryTagPath);
-
-            foreach ($productIds as $productId) {
-                $tagsList[] = "{$productTagPrefix}_{$productId}";
-            }
-
             $categoryIds = $this->_getProductCategory($productIds);
-            foreach ($categoryIds as $categoryId) {
-                $tagsList[] = "{$categoryTagPrefix}_{$categoryId}";
-            }
+
+            $tagsList = $this->convertIdsToTags($productIds);
+            $tagsList += $this->convertIdsToTags($categoryIds,'catalog_category');
+
             Mage::dispatchEvent('application_clean_cache', array('tags' => $tagsList));
             Mage::getSingleton('opsway_varnishgento/processor')->cleanCache();
         }
