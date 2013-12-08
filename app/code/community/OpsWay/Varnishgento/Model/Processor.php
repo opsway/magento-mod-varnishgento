@@ -30,6 +30,8 @@ class OpsWay_Varnishgento_Model_Processor
      */
     const CLEAN_CATEGORY_PER_TIME = 60;
 
+    const CACHE_CLEAN_COUNTER = 'VARNISH_CACHE_CLEAN_COUNTER';
+
     /**
      * Tags catalog category prefix
      */
@@ -149,6 +151,22 @@ class OpsWay_Varnishgento_Model_Processor
         } else {
             $this->addTagsToQueue($tagsToClean);
         }
+    }
+
+    public function checkPurgeIsScheduled(){
+        $isScheduled = false;
+        $counter = (int) Mage::app()->loadCache(self::CACHE_CLEAN_COUNTER);
+        if(!$counter){
+             Mage::app()->saveCache(1,self::CACHE_CLEAN_COUNTER, array('CUSTOM_VARNIGENTO'));
+             $counter = 1;
+        }
+        $period = Mage::getStoreConfig('opsway_varnishgento/general/flush_period');
+        if ($counter++ % $period == 0){
+            $isScheduled = true;
+            $counter = 1;
+        }
+        Mage::app()->saveCache($counter,self::CACHE_CLEAN_COUNTER, array('CUSTOM_VARNIGENTO'));
+        return $isScheduled;
     }
 
     public function filterTags($tags)

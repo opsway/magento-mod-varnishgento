@@ -239,6 +239,7 @@
                 <active>0</active>
                 <servers />
                 <asynchronous_flush>1</asynchronous_flush>
+                <flush_period>30</flush_period>
                 <flush_after_import>1</flush_after_import>
                 <debug>0</debug>
                 <flushall>1</flushall>
