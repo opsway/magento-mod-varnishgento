@@ -50,6 +50,15 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </asynchronous_flush>
+                        <flush_period translate="label">
+                            <label>Period for flushing tags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>In minutes</comment>
+                        </flush_period>
                         <flush_after_import translate="label">
                             <label>Cache Flush affected products after import</label>
                             <source_model>adminhtml/system_config_source_yesno</source_model>

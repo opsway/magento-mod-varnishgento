@@ -18,9 +18,13 @@ class OpsWay_Shell_Varnishgento extends Mage_Shell_Abstract
     public function run()
     {
         $processor = Mage::getSingleton('opsway_varnishgento/processor');
-        $tagsToClean = $processor->getTagsFromQueue(false);
+        $this->purgeUrls($processor);
+
+        if (!$processor->checkPurgeIsScheduled()){
+            return;
+        }
         try {
-            $this->purgeUrls($processor);
+            $tagsToClean = $processor->getTagsFromQueue(false);
             if (empty($tagsToClean)) {
                 return;
             }
