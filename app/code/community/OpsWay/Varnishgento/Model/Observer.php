@@ -316,7 +316,7 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive()) {
             return;
         }
-        if (Mage::getStoreConfig('opsway_varnishgento/general/flush_after_import')) {
+        if (Mage::getStoreConfig('opsway_varnishgento/flushing/after_import')) {
             /**
              * @var $importEntityAdapter Mage_ImportExport_Model_Import_Entity_Product
              */

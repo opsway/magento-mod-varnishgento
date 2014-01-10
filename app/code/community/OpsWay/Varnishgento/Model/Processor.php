@@ -142,7 +142,7 @@ class OpsWay_Varnishgento_Model_Processor
             return;
         }
 
-        if (!Mage::getStoreConfig('opsway_varnishgento/general/asynchronous_flush')) {
+        if (!Mage::getStoreConfig('opsway_varnishgento/flushing/asynchronous')) {
             try {
                 $this->purgeTags($tagsToClean);
             } catch (OpsWay_Varnishgento_Model_Connector_Exception $e) {
@@ -163,7 +163,7 @@ class OpsWay_Varnishgento_Model_Processor
      * @return array|bool
      */
     public function getPurgeTypeTagsScheduled($counter){
-        $period = Mage::getStoreConfig('opsway_varnishgento/general/flush_period');
+        $period = Mage::getStoreConfig('opsway_varnishgento/flushing/base_period');
         if ($counter % $period == 0){
             $periodTags = Mage::helper('opsway_varnishgento')->getFlushPeriodByTags();
             return array_keys(
@@ -208,7 +208,7 @@ class OpsWay_Varnishgento_Model_Processor
         }
 
         if ($this->_exceptionTagsList === null){
-            $configTags = trim(Mage::getStoreConfig('opsway_varnishgento/general/exception_tags'));
+            $configTags = trim(Mage::getStoreConfig('opsway_varnishgento/flushing/exception_tags'));
             if ($configTags != ''){
                 $this->_exceptionTagsList = explode(",",$configTags);
             } else {

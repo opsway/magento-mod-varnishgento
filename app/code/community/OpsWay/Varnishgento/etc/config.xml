@@ -238,14 +238,16 @@
             <general>
                 <active>0</active>
                 <servers />
-                <asynchronous_flush>1</asynchronous_flush>
-                <flush_period>30</flush_period>
-                <flush_after_import>1</flush_after_import>
                 <debug>0</debug>
-                <flushall>1</flushall>
-                <exception_tags />
-                <limit_to_flush>5000</limit_to_flush>
             </general>
+            <flushing>
+                <asynchronous>1</asynchronous>
+                <base_period>10</base_period>
+                <after_import>0</after_import>
+                <after_reindex>0</after_reindex>
+                <exception_tags />
+                <limit_to_flush>1000</limit_to_flush>
+            </flushing>
             <varnishpurger_config>
                 <!-- This should be a little bit bigger then cron scheduled period -->
                 <update_period_seconds>70</update_period_seconds>

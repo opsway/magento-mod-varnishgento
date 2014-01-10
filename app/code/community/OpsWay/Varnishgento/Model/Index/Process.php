@@ -20,7 +20,7 @@ class OpsWay_Varnishgento_Model_Index_Process extends Mage_Index_Model_Process
     {
         parent::reindexAll();
 
-        if (Mage::getStoreConfig('opsway_varnishgento/general/flushall') == 1) {
+        if (Mage::getStoreConfig('opsway_varnishgento/flushing/after_reindex') == 1) {
             // Send event to varnigento to clean pages
             Mage::dispatchEvent('application_clean_cache', array('tags' =>array('.*')));
             Mage::getSingleton('opsway_varnishgento/processor')->cleanCache();

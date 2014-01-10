@@ -332,6 +332,7 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getFlushPeriodByTags(){
         $result = array();
+        $basePeriod = Mage::getStoreConfig('opsway_varnishgento/flushing/base_period');
         $rawField = @unserialize(Mage::getStoreConfig('opsway_varnishgento/flushing/period_by_tags'));
         if (!is_array($rawField)){
             $rawField = array();
@@ -345,10 +346,13 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
                 }
             }
             if ($foundSaveValue === FALSE){
-                $result[$shotTagType] = Mage::getStoreConfig('opsway_varnishgento/general/flush_period');
+                $result[$shotTagType] = $basePeriod;
             } else {
-                //todo: protect from wrong value
-                $result[$shotTagType] = $foundSaveValue;
+                if ($foundSaveValue % $basePeriod == 0){
+                    $result[$shotTagType] = $foundSaveValue;
+                } else {
+                    $result[$shotTagType] = $basePeriod;
+                }
             }
         }
         return $result;

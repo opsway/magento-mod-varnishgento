@@ -42,34 +42,6 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </version>
-                        <asynchronous_flush translate="label">
-                            <label>Asynchronous Cache Flush</label>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <frontend_type>select</frontend_type>
-                            <sort_order>30</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </asynchronous_flush>
-                        <flush_period translate="label">
-                            <label>Period for flushing tags</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>35</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>In minutes</comment>
-                        </flush_period>
-                        <flush_after_import translate="label">
-                            <label>Cache Flush affected products after import</label>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <frontend_type>select</frontend_type>
-                            <sort_order>40</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>Only for standart magento import</comment>
-                        </flush_after_import>
                         <show_nodes translate="label">
                             <label>Enable Show Nodes On The Current Page</label>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -88,38 +60,11 @@
                             <show_in_store>0</show_in_store>
                             <comment>Format: "N1:ip1;N2:ip;..."</comment>
                         </nodes_ip>
-                        <flushall translate="label">
-                            <label>Flush cache after reindex</label>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <frontend_type>select</frontend_type>
-                            <sort_order>100</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </flushall>
-                        <exception_tags translate="label">
-                            <label>Exception tags for purge</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>130</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>Comma separate: "TAG1,TAG2,etc"</comment>
-                        </exception_tags>
-                        <limit_to_flush translate="label">
-                            <label>Limit to flush tags</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>140</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <comment>For once request</comment>
-                        </limit_to_flush>
                         <debug translate="label">
                             <label>Debug</label>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <frontend_type>select</frontend_type>
-                            <sort_order>210</sort_order>
+                            <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
@@ -133,24 +78,79 @@
                     <label>Cache flushing options</label>
                     <sort_order>20</sort_order>
                     <fields>
+                        <asynchronous translate="label">
+                            <label>Asynchronous Cache Flush</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </asynchronous>
+                        <limit_to_flush translate="label">
+                            <label>Limit to flush tags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>For once request, if more, then will full flush</comment>
+                        </limit_to_flush>
+                        <base_period translate="label">
+                            <label>Base period for flushing tags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>In minutes</comment>
+                        </base_period>
                         <period_by_tags translate="label">
                             <label>Flushing period by tags</label>
                             <frontend_model>opsway_varnishgento/adminhtml_system_config_field_periodTags</frontend_model>
                             <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
-                            <sort_order>100</sort_order>
+                            <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Should be multiple of base period</comment>
                         </period_by_tags>
+                        <exception_tags translate="label">
+                            <label>Exception tags for purge</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Comma separate: "TAG1,TAG2,etc"</comment>
+                        </exception_tags>
+                        <after_reindex translate="label">
+                            <label>Flush cache after reindex</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </after_reindex>
+                        <after_import translate="label">
+                            <label>Cache Flush affected products after import</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Only for standart magento import</comment>
+                        </after_import>
                     </fields>
                 </flushing>
                 <memcached translate="label" module="opsway_varnishgento">
                     <show_in_default>1</show_in_default>
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
-                    <label>Memcached</label>
-                    <sort_order>30</sort_order>
+                    <label>Storage Options</label>
+                    <sort_order>40</sort_order>
                     <fields>
                         <auto translate="label">
                             <label>Flush with varnish</label>
