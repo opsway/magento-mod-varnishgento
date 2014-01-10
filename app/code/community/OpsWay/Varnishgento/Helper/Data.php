@@ -329,4 +329,47 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $categoryIds;
     }
+
+    public function getFlushPeriodByTags(){
+        $result = array();
+        $rawField = @unserialize(Mage::getStoreConfig('opsway_varnishgento/flushing/period_by_tags'));
+        if (!is_array($rawField)){
+            $rawField = array();
+        }
+        foreach ($this->getListTagTypes() as $shotTagType){
+            $foundSaveValue = false;
+            foreach ($rawField as $value){
+                if ($value['type'] == $shotTagType){
+                    $foundSaveValue = $value['period'];
+                    break;
+                }
+            }
+            if ($foundSaveValue === FALSE){
+                $result[$shotTagType] = Mage::getStoreConfig('opsway_varnishgento/general/flush_period');
+            } else {
+                //todo: protect from wrong value
+                $result[$shotTagType] = $foundSaveValue;
+            }
+        }
+        return $result;
+    }
+
+    public function getListTagTypes(){
+        $cacheTagShortcuts = array();
+        $path = 'global/opsway_varnishgento/cache_tag_shortcuts';
+        foreach (Mage::app()->getConfig()->getNode($path)->children() as $node) {
+            $cacheTagShortcuts[(string)$node->source] = (string)$node->target;
+        }
+        return $cacheTagShortcuts;
+    }
+
+    public function getCompareTagFunc(){
+    return function($tag,$exTag){
+                    if (stripos($tag,$exTag) === 0){
+                        return 0;
+                    } else {
+                        return (stripos($tag,$exTag) === false) ? 1 : -1;
+                    }
+                };
+    }
 }

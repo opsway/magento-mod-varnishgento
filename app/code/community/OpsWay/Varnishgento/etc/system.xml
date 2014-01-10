@@ -13,6 +13,7 @@
                 <show_in_website>0</show_in_website>
                 <show_in_store>0</show_in_store>
                 <label>General</label>
+                <sort_order>10</sort_order>
                     <fields>
                         <active translate="label">
                             <label>Enabled</label>
@@ -125,12 +126,31 @@
                         </debug>
                     </fields>
                 </general>
+                <flushing translate="label" module="opsway_varnishgento">
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <label>Cache flushing options</label>
+                    <sort_order>20</sort_order>
+                    <fields>
+                        <period_by_tags translate="label">
+                            <label>Flushing period by tags</label>
+                            <frontend_model>opsway_varnishgento/adminhtml_system_config_field_periodTags</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Should be multiple of base period</comment>
+                        </period_by_tags>
+                    </fields>
+                </flushing>
                 <memcached translate="label" module="opsway_varnishgento">
                     <show_in_default>1</show_in_default>
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <label>Memcached</label>
-                    <sort_order>20</sort_order>
+                    <sort_order>30</sort_order>
                     <fields>
                         <auto translate="label">
                             <label>Flush with varnish</label>

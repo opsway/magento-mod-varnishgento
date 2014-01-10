@@ -20,11 +20,13 @@ class OpsWay_Shell_Varnishgento extends Mage_Shell_Abstract
         $processor = Mage::getSingleton('opsway_varnishgento/processor');
         $this->purgeUrls($processor);
 
-        if (!$processor->checkPurgeIsScheduled()){
+        $tagsTypeForPurge = $processor->getPurgeTypeTagsScheduled($processor->tickTockCounter());
+        if ($tagsTypeForPurge === false){
             return;
         }
         try {
             $tagsToClean = $processor->getTagsFromQueue(false);
+            $tagsToClean = $processor->filterTags($tagsToClean,$tagsTypeForPurge);
             if (empty($tagsToClean)) {
                 return;
             }

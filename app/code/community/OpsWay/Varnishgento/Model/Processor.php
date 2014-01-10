@@ -47,6 +47,11 @@ class OpsWay_Varnishgento_Model_Processor
     const CACHE_HEADER_TAG_SEPARATOR = '~';
 
     /**
+     * Purge tick-tock counter - cycle during 24h
+     */
+    const MAX_TICKTOCK_COUNTER = 1440;
+
+    /**
      * Exception blocks list
      * @var array
      */
@@ -153,24 +158,55 @@ class OpsWay_Varnishgento_Model_Processor
         }
     }
 
-    public function checkPurgeIsScheduled(){
-        $isScheduled = false;
+    /**
+     * @param $counter int
+     * @return array|bool
+     */
+    public function getPurgeTypeTagsScheduled($counter){
+        $period = Mage::getStoreConfig('opsway_varnishgento/general/flush_period');
+        if ($counter % $period == 0){
+            $periodTags = Mage::helper('opsway_varnishgento')->getFlushPeriodByTags();
+            return array_keys(
+                        array_filter(
+                            $periodTags,
+                            function($tag_period) use ($counter){
+                                return ($counter % $tag_period == 0);
+                            }
+                        )
+            );
+        }
+        return false;
+    }
+
+    /**
+     * Increment TickTock Counter (Base generator)
+     * @return int
+     */
+    public function tickTockCounter(){
         $counter = (int) Mage::app()->loadCache(self::CACHE_CLEAN_COUNTER);
         if(!$counter){
-             Mage::app()->saveCache(1,self::CACHE_CLEAN_COUNTER, array('CUSTOM_VARNIGENTO'));
-             $counter = 1;
+             $counter = 0;
         }
-        $period = Mage::getStoreConfig('opsway_varnishgento/general/flush_period');
-        if ($counter++ % $period == 0){
-            $isScheduled = true;
+        $counter++;
+        if ($counter > self::MAX_TICKTOCK_COUNTER){
             $counter = 1;
         }
         Mage::app()->saveCache($counter,self::CACHE_CLEAN_COUNTER, array('CUSTOM_VARNIGENTO'));
-        return $isScheduled;
+        return $counter;
     }
 
-    public function filterTags($tags)
+    /**
+     * @param array $tags
+     * @param array $byTypeTags
+     *
+     * @return array
+     */
+    public function filterTags($tags,$byTypeTags = array())
     {
+        if (count($byTypeTags)){
+            return array_uintersect($tags, $byTypeTags, Mage::helper('opsway_varnishgento')->getCompareTagFunc());
+        }
+
         if ($this->_exceptionTagsList === null){
             $configTags = trim(Mage::getStoreConfig('opsway_varnishgento/general/exception_tags'));
             if ($configTags != ''){
@@ -182,13 +218,7 @@ class OpsWay_Varnishgento_Model_Processor
         if (empty($this->_exceptionTagsList)){
             return $tags;
         }
-        return array_udiff($tags,$this->_exceptionTagsList,function($tag,$exTag){
-                if (stripos($tag,$exTag) === 0){
-                    return 0;
-                } else {
-                    return (stripos($tag,$exTag) === false) ? 1 : -1;
-                }
-            });
+        return array_udiff($tags,$this->_exceptionTagsList,Mage::helper('opsway_varnishgento')->getCompareTagFunc());
     }
 
     /**
