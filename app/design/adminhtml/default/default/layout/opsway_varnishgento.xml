@@ -2,7 +2,7 @@
 <layout>
     <adminhtml_cache_index>
         <reference name="content">
-            <block type="opsway_varnishgento/adminhtml_additional" name="varnish.additional" template="opsway_varnishgento/additional.phtml"></block>
+            <block type="opsway_varnishgento/adminhtml_cache" name="varnish.additional" template="opsway_varnishgento/additional.phtml"></block>
         </reference>
     </adminhtml_cache_index>
 </layout>

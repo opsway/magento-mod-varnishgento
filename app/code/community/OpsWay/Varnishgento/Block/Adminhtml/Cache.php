@@ -21,7 +21,7 @@ class OpsWay_Varnishgento_Block_Adminhtml_Cache extends Mage_Adminhtml_Block_Cac
         
     	$this->_addButton('flush_varnish', array(
             'label'     => Mage::helper('core')->__('Flush Home Page Varnish cache'),
-            'onclick'   => 'setLocation(\'' . $this->getFlushVarnishUrl() .'\')',
+            'onclick'   => 'setLocation(\'' . $this->getFlushVarnishUrl('/') .'\')',
 	    	'class'     => 'delete',
         ));
     }
@@ -29,10 +29,10 @@ class OpsWay_Varnishgento_Block_Adminhtml_Cache extends Mage_Adminhtml_Block_Cac
     /**
      * Get url for clean varnish cache
      */
-    public function getFlushVarnishUrl()
+    public function getFlushVarnishUrl($url = false)
     {
         //@todo get Home page from base URL
-        return $this->getUrl('*/*/flushVarnish').'?purge_url='.urlencode("/");
+        return $this->getUrl('*/*/flushVarnish') . ($url) ? '?purge_url='.urlencode($url) : '';
     }
 
 }
