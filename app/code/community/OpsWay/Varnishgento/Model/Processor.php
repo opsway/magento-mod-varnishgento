@@ -224,7 +224,7 @@ class OpsWay_Varnishgento_Model_Processor
         if (empty($this->_exceptionTagsList)){
             return $tags;
         }
-        return array_udiff($tags,$this->_exceptionTagsList,Mage::helper('opsway_varnishgento')->getCompareTagFunc());
+        return array_udiff($tags,$this->_exceptionTagsList,Mage::helper('opsway_varnishgento')->getCompareTagFunc(true));
     }
 
     /**
