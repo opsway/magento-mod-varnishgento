@@ -132,7 +132,20 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
             $servers = $this->getServers();
             $this->_isActive = (bool)(Mage::getStoreConfig('opsway_varnishgento/general/active') && !empty($servers));
         }
+        if ($this->_isActive){
+            if (!$this->isModuleOutputEnabled()){
+                $this->disable();
+            }
+
+            if (!$this->checkVarnishgentoHeader()){
+                $this->disable();
+            }
+        }
         return $this->_isActive;
+    }
+
+    public function checkVarnishgentoHeader(){
+        return (bool)$this->_getRequest()->getHeader(OpsWay_Varnishgento_Model_Processor::VARNISH_HEADER_NAME);
     }
 
     /**

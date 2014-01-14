@@ -14,7 +14,13 @@ class OpsWay_Varnishgento_Model_Processor
      * Cache header name
      */
     const CACHE_HEADER_NAME = 'X-Cache-Tags';
-
+    /**
+     * Flag to check for needed enabled or disabled processing
+     */
+    const VARNISH_HEADER_NAME = 'X-Varnishgento';
+    /**
+     * If in response will be this header response willn't added to varnish cache
+     */
     const NO_CACHE_TAG_NAME = 'NO_CACHE_TAG';
 
     /**
