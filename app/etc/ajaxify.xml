@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <global>
+        <cache>
+            <request_processors>
+                <ajaxify>OpsWay_Varnishgento_Model_Ajaxify_Processor</ajaxify>
+            </request_processors>
+        </cache>
+    </global>
+</config>

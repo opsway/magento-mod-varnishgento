@@ -144,6 +144,10 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         return $this->_isActive;
     }
 
+    public function getAjaxifyHelper(){
+        return Mage::helper('opsway_varnishgento/ajaxify');
+    }
+
     public function checkVarnishgentoHeader(){
         return (bool)$this->_getRequest()->getHeader(OpsWay_Varnishgento_Model_Processor::VARNISH_HEADER_NAME);
     }

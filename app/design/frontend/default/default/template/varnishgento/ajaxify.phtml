@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var $this Mage_Core_Block_Template
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+Ajaxify.Init({URL:'<?php echo $this->getUrl()?>ajaxify/',messages:0});
+
+var messagesCookie = '<?php OpsWay_Varnishgento_Model_Ajaxify_Processor::MESSAGES_COOKIE ?>';
+if (Mage.Cookies.get(messagesCookie)) {
+    Ajaxify.initMessages(messagesCookie);
+}
+//]]>
+</script>

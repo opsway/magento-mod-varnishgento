@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+     <!--default>
+         <reference name="root">
+             <remove name="global_messages" />
+             <remove name="messages" />
+         </reference>
+	</default-->
+    <ajaxify>
+        <remove name="global_messages"/>
+        <reference name="root">
+            <remove name="global_messages"/>
+        </reference>
+        <reference name="content">
+            <remove name="global_messages"/>
+        </reference>
+    </ajaxify>
+</layout>

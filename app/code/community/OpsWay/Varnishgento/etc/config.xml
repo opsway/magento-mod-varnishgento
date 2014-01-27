@@ -10,6 +10,11 @@
             <opsway_varnishgento>
                 <class>OpsWay_Varnishgento_Helper</class>
             </opsway_varnishgento>
+            <core>
+               <rewrite>
+                    <url>OpsWay_Varnishgento_Helper_Ajaxify_Url</url>
+               </rewrite>
+            </core>
         </helpers>
         <blocks>
             <opsway_varnishgento>
@@ -25,6 +30,11 @@
                     <cache>OpsWay_Varnishgento_Block_Adminhtml_Cache</cache>
                  </rewrite>
             </adminhtml>
+            <core>
+                <rewrite>
+                        <messages>OpsWay_Varnishgento_Block_Ajaxify_Messages</messages>
+                </rewrite>
+            </core>
         </blocks>
         <models>
             <opsway_varnishgento>
@@ -144,7 +154,30 @@
                     </process_out_of_stock_products>
                 </observers>
             </checkout_submit_all_after>
+            <controller_action_layout_generate_blocks_after>
+                <observers>
+                        <check_cacheable>
+                                <class>opsway_varnishgento/observer</class>
+                                <method>afterLoadLayout</method>
+                        </check_cacheable>
+                </observers>
+            </controller_action_layout_generate_blocks_after>
+            <core_session_abstract_add_message>
+                <observers>
+                    <ajaxify_oncart_add_cookie>
+                        <class>opsway_varnishgento/observer</class>
+                        <method>addMessageAddedCookie</method>
+                    </ajaxify_oncart_add_cookie>
+                </observers>
+            </core_session_abstract_add_message>
         </events>
+        <layout>
+            <updates>
+              <ajaxify>
+                  <file>ajaxify.xml</file>
+              </ajaxify>
+            </updates>
+        </layout>
         <opsway_varnishgento>
             <block_exceptions>
                 <!--top_menu>top.menu</top_menu-->
