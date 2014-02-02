@@ -30,4 +30,34 @@ class OpsWay_Varnishgento_Adminhtml_CacheController extends Mage_Adminhtml_Cache
     	$this->_redirect('*/*');
     }
 
+    public function generateAjaxifyBlocksAction(){
+        $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . 'ajaxify/?blocks='.implode(",",Mage::helper('opsway_varnishgento/ajaxify')->getAjaxifyNameBlocks());
+        $dummyRequest = new Zend_Http_Client($url);
+        // This need if server password required
+        //$dummyRequest->setAuth('ecpadmin', '*******');
+        $response = $dummyRequest->request();
+        if ($response->isSuccessful()){
+            $ajaxifyBlocks = Zend_Json::decode($response->getBody());
+            $zip = new ZipArchive();
+            $filename = "/tmp/ajaxify-static-blocks.zip";
+            @unlink($filename);
+            if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+                exit("cannot open <$filename>\n");
+            }
+            foreach ($ajaxifyBlocks as $name => $content){
+                $zip->addFromString($name.".phtml", $content);
+            }
+            $zip->close();
+
+            $this->getResponse()->setHeader('Content-Type','application/zip',true);
+            $this->getResponse()->setHeader('Content-Length',filesize($filename),true);
+            $this->getResponse()->setHeader('Content-Disposition','attachment; filename="'.basename($filename).'"',true);
+            $this->getResponse()->setBody(file_get_contents($filename));
+
+        } else {
+            $this->_getSession()->addError(Mage::helper('adminhtml')->__("Error during generation ajaxify static blocks: %s", $response->getHeadersAsString()));
+            $this->_redirect('*/*');
+        }
+    }
+
 }

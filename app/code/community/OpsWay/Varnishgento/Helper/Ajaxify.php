@@ -10,6 +10,7 @@ class OpsWay_Varnishgento_Helper_Ajaxify extends Mage_Core_Helper_Abstract
     protected $_isActive = null;
     protected $_uncachedBlocks = null;
     protected $_currentProcessing = null;
+    protected $_currentProcessingHtmlOutput = null;
 
     public function isActive(){
         if (is_null($this->_isActive)){
@@ -43,9 +44,31 @@ class OpsWay_Varnishgento_Helper_Ajaxify extends Mage_Core_Helper_Abstract
         }
     }
 
+    /**
+     * @param $block Mage_Core_Block_Abstract
+     */
     public function startProcessingBlock($block){
         if ($this->checkIsAjaxifyBlock($block) && !$this->_currentProcessing){
             $this->_currentProcessing = $block->getNameInLayout();
+            if (Mage::app()->useCache(Mage_Core_Block_Abstract::CACHE_GROUP)){
+                $block->addCacheTag('static-'.$this->_currentProcessing);
+                $block->setData('cache_lifetime',3600*24*7);
+                $this->_currentProcessingHtmlOutput = Mage::app()->loadCache($block->getCacheKey());
+            }
+            if ($this->_currentProcessingHtmlOutput) {
+                $this->_currentProcessingHtmlOutput = null;
+                return;
+            } else {
+                $this->_currentProcessingHtmlOutput = $block->getLayout()->createBlock(
+                                                'Mage_Core_Block_Template',
+                                                'ajaxify-'.$this->_currentProcessing,
+                                                array('template' => 'varnishgento/ajaxify_static/'. strtolower($this->_currentProcessing) .'.phtml')
+                                            )->toHtml();
+            }
+            if ($this->_currentProcessingHtmlOutput){
+                $tags = $block->getCacheTags();
+                Mage::app()->saveCache($this->_currentProcessingHtmlOutput, $block->getCacheKey(), $tags, $block->getCacheLifetime());
+            }
         }
     }
 
@@ -54,10 +77,25 @@ class OpsWay_Varnishgento_Helper_Ajaxify extends Mage_Core_Helper_Abstract
          * @var $block Mage_Core_Block_Abstract
          */
         if ($this->checkIsAjaxifyBlock($block) && $htmlObject && ($this->_currentProcessing == $block->getNameInLayout())){
-            $handles = implode(",",$block->getLayout()->getUpdate()->getHandles());
-            $htmlObject->setHtml('<div class="ajax-loader" id="'.$block->getNameInLayout().'_block" rel="'.$block->getNameInLayout().'" handles="'.$handles.'">'.$htmlObject->getHtml().'</div>');
+            $this->_wrapBlock($block,$htmlObject);
             $this->_currentProcessing = null;
+            $this->_currentProcessingHtmlOutput = null;
         }
+    }
+
+    protected function _wrapBlock($block,$htmlObject){
+        $htmlObject->setHtml(
+            '<div class="ajax-loader" id="'
+            .$block->getNameInLayout()
+            .'_block" rel="'
+            .$block->getNameInLayout()
+            .'" handles="'
+            .implode(",",$block->getLayout()->getUpdate()->getHandles())
+            .'">'
+            .(($this->_currentProcessingHtmlOutput) ? $this->_currentProcessingHtmlOutput : $htmlObject->getHtml())
+            .'</div>'
+        );
+
     }
 
     public function checkIsAjaxifyBlock($block){

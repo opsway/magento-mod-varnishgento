@@ -170,6 +170,15 @@
                             <show_in_store>0</show_in_store>
                             <comment>Set name blocks with new line</comment>
                         </uncached_blocks>
+                        <generate_blocks translate="label">
+                            <label>Generate static ajaxify blocks</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>opsway_varnishgento/adminhtml_system_config_field_generateButton</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </generate_blocks>
                     </fields>
                 </ajaxify>
                 <memcached translate="label" module="opsway_varnishgento">
