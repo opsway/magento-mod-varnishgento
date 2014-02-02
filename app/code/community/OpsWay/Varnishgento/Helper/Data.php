@@ -398,19 +398,20 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         return $cacheTagShortcuts;
     }
 
-    public function getCompareTagFunc($useRegex = false){
-    return function($tag,$exTag) use ($useRegex){
-                    if ($useRegex){
-                        if (preg_match('/'.$exTag.'/ui',$tag)){
-                            return 0;
-                        }
-                        return 1;
-                    } else {
-                        if (stripos($tag,$exTag) === 0){
-                            return 0;
-                        }
-                        return (stripos($tag,$exTag) === false) ? 1 : -1;
-                    }
-                };
+    public function getCompareTagFunc($exTags,$useRegex = false){
+        return function($tag) use ($exTags,$useRegex){
+                            foreach ($exTags as $exTag){
+                                if ($useRegex){
+                                    if (preg_match('/'.$exTag.'/ui',$tag)){
+                                        return false;
+                                    }
+                                } else {
+                                    if (stripos($tag,$exTag) === 0){
+                                        return false;
+                                    }
+                                }
+                            }
+                            return true;
+                        };
     }
 }

@@ -210,7 +210,7 @@ class OpsWay_Varnishgento_Model_Processor
     public function filterTags($tags,$byTypeTags = array())
     {
         if (count($byTypeTags)){
-            return array_uintersect($tags, $byTypeTags, Mage::helper('opsway_varnishgento')->getCompareTagFunc());
+            return array_diff($tags, array_filter($tags, Mage::helper('opsway_varnishgento')->getCompareTagFunc($byTypeTags)));
         }
 
         if ($this->_exceptionTagsList === null){
@@ -224,7 +224,7 @@ class OpsWay_Varnishgento_Model_Processor
         if (empty($this->_exceptionTagsList)){
             return $tags;
         }
-        return array_udiff($tags,$this->_exceptionTagsList,Mage::helper('opsway_varnishgento')->getCompareTagFunc(true));
+        return array_filter($tags,Mage::helper('opsway_varnishgento')->getCompareTagFunc($this->_exceptionTagsList,true));
     }
 
     /**
