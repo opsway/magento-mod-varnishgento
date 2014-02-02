@@ -137,11 +137,25 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
                 $this->disable();
             }
 
-            if (!$this->checkVarnishgentoHeader()){
+            if ($this->isFrontendRequest() && !$this->checkVarnishgentoHeader()){
                 $this->disable();
             }
         }
         return $this->_isActive;
+    }
+
+    public function isFrontendRequest(){
+        if(Mage::app()->getStore()->isAdmin())
+        {
+            return false;
+        }
+
+        if(Mage::getDesign()->getArea() == 'adminhtml')
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public function getAjaxifyHelper(){

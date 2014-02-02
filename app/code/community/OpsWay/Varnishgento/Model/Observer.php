@@ -100,6 +100,9 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive()) {
             return;
         }
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         /**
          * @var $controller Mage_Core_Controller_Varien_Front
          */
@@ -135,6 +138,9 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive() || !$this->_helper->getCollectTags()) {
             return;
         }
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         Mage::getSingleton('opsway_varnishgento/processor')->addModelCacheTags($object);
     }
 
@@ -145,6 +151,9 @@ class OpsWay_Varnishgento_Model_Observer
     public function addCollectionCacheTagsOnLoad(Varien_Event_Observer $observer)
     {
         if (!$this->_isActive() || !$this->_helper->getCollectTags()) {
+            return;
+        }
+        if (!$this->_helper->isFrontendRequest()){
             return;
         }
         $collection = $observer->getEvent()->getCollection();
@@ -162,6 +171,9 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive() || !$this->_helper->getCollectTags()) {
             return;
         }
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         $collection = $observer->getEvent()->getCategoryCollection();
         foreach ($collection as $item) {
             Mage::getSingleton('opsway_varnishgento/processor')->addModelCacheTags($item);
@@ -177,7 +189,9 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive()) {
             return;
         }
-
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         $tags = $observer->getEvent()->getTags();
         Mage::getSingleton('opsway_varnishgento/processor')->addTags($tags);
     }
@@ -223,6 +237,9 @@ class OpsWay_Varnishgento_Model_Observer
      */
     public function  disableCacheForProductWithSpecialPrice(Varien_Event_Observer $observer)
     {
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         /**
          * @var $product Mage_Catalog_Model_Product
          */
@@ -256,6 +273,9 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive()) {
             return;
         }
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         if ($this->_helper->getAjaxifyHelper()->isActive()){
             $this->_helper->getAjaxifyHelper()->startProcessingBlock($observer->getEvent()->getBlock());
         }
@@ -271,6 +291,9 @@ class OpsWay_Varnishgento_Model_Observer
         if (!$this->_isActive()) {
             return;
         }
+        if (!$this->_helper->isFrontendRequest()){
+            return;
+        }
         if ($this->_helper->getAjaxifyHelper()->isActive()){
             $this->_helper->getAjaxifyHelper()->stopProcessingBlock($observer->getEvent()->getBlock(),$observer->getEvent()->getTransport());
         }
@@ -279,6 +302,9 @@ class OpsWay_Varnishgento_Model_Observer
 
     public function afterLoadLayout(Varien_Event_Observer $observer){
         if (!$this->_isActive()) {
+            return;
+        }
+        if (!$this->_helper->isFrontendRequest()){
             return;
         }
         if ($this->_helper->getAjaxifyHelper()->isActive()){
