@@ -14,7 +14,7 @@ This extension is designed for automatic cleaning of outdated full page cache of
 
 ## Requirements
 
-  * Magento Community Edition 1.6+ or Magento Enterprise Edition 1.9+
+  * Magento Community Edition 1.4+ or Magento Enterprise Edition 1.9+
   * Varnish 2.1+ (including 3.0+)
 
 
