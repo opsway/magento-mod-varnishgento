@@ -51,7 +51,8 @@ class OpsWay_Varnishgento_Helper_Ajaxify extends Mage_Core_Helper_Abstract
         if ($this->checkIsAjaxifyBlock($block) && !$this->_currentProcessing){
             $this->_currentProcessing = $block->getNameInLayout();
             if (Mage::app()->useCache(Mage_Core_Block_Abstract::CACHE_GROUP)){
-                $block->addCacheTag('static-'.$this->_currentProcessing);
+                //Not compatible with old version magento
+                //$block->addCacheTag('static-'.$this->_currentProcessing);
                 $block->setData('cache_lifetime',3600*24*7);
                 $this->_currentProcessingHtmlOutput = Mage::app()->loadCache($block->getCacheKey());
             }

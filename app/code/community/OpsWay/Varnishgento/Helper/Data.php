@@ -240,7 +240,7 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function checkLimitObjectToFlush($objects)
     {
-        if (count($objects) > (int)(Mage::getStoreConfig('opsway_varnishgento/general/limit_to_flush'))){
+        if (count($objects) > (int)(Mage::getStoreConfig('opsway_varnishgento/flushing/limit_to_flush'))){
             if (!$this->isFlushAllActive()){
                 $this->flushAll();
             }

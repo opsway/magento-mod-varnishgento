@@ -32,7 +32,7 @@ class OpsWay_Varnishgento_Block_Adminhtml_Cache extends Mage_Adminhtml_Block_Cac
     public function getFlushVarnishUrl($url = false)
     {
         //@todo get Home page from base URL
-        return $this->getUrl('*/*/flushVarnish') . ($url) ? '?purge_url='.urlencode($url) : '';
+        return $this->getUrl('*/*/flushVarnish') . (($url) ? '?purge_url='.urlencode($url) : '');
     }
 
 }
