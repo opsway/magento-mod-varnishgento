@@ -11,6 +11,9 @@
 
 class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const CONFIG_KEY_LONG_CACHE_TAG = 'long_cache_tag';
+    const CONFIG_KEY_SHORT_CACHE_TAG = 'short_cache_tag';
+    const CONFIG_KEY_MODEL_CACHE_TAG = 'model_cache_tag';
     /**
      * Cache tags to attach to the page
      * @var array
@@ -389,13 +392,36 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         return $result;
     }
 
+    public function getCustomTagTypes($returnShotcuts = false){
+        $rawField = @unserialize(Mage::getStoreConfig('opsway_varnishgento/flushing/custom_tags'));
+        if (!is_array($rawField)){
+            $rawField = array();
+        }
+        if ($returnShotcuts){
+            $listTagTypes = array();
+            foreach ($rawField as $row){
+                $listTagTypes[strtoupper($row[self::CONFIG_KEY_LONG_CACHE_TAG])] = $row[self::CONFIG_KEY_SHORT_CACHE_TAG];
+            }
+            return $listTagTypes;
+        }
+        return $rawField;
+    }
+
     public function getListTagTypes(){
         $cacheTagShortcuts = array();
         $path = 'global/opsway_varnishgento/cache_tag_shortcuts';
         foreach (Mage::app()->getConfig()->getNode($path)->children() as $node) {
             $cacheTagShortcuts[(string)$node->source] = (string)$node->target;
         }
+        $cacheTagShortcuts += $this->getCustomTagTypes(true);
         return $cacheTagShortcuts;
+    }
+
+    public function checkCustomTag($modelName){
+        foreach ($this->getCustomTagTypes() as $row){
+            if ($modelName == $row[self::CONFIG_KEY_MODEL_CACHE_TAG]) return $row[self::CONFIG_KEY_LONG_CACHE_TAG];
+        }
+        return false;
     }
 
     public function getCompareTagFunc($exTags,$useRegex = false){

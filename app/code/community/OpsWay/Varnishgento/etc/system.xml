@@ -115,6 +115,16 @@
                             <show_in_store>0</show_in_store>
                             <comment>Should be multiple of base period</comment>
                         </period_by_tags>
+                        <custom_tags translate="label">
+                            <label>Custom cache tags</label>
+                            <frontend_model>opsway_varnishgento/adminhtml_system_config_field_customTags</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Use for add model to varnish auto processing</comment>
+                        </custom_tags>
                         <exception_tags translate="label">
                             <label>Exception tags for purge</label>
                             <frontend_type>text</frontend_type>

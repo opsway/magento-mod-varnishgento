@@ -43,7 +43,7 @@
             </opsway_varnishgento>
             <index>
                 <rewrite>
-                    <process>OpsWay_Varnishgento_Model_Index_Process</process>
+                    <process>OpsWay_Varnishgento_Model_Rewrite_Index_Process</process>
                 </rewrite>
             </index>
             <opsway_varnishgento_mysql4>

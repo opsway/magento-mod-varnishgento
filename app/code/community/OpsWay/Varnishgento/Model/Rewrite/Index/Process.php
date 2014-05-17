@@ -9,7 +9,7 @@
  * @author   Alexandr Vronskiy <alvro@opsway.com>
  */
 
-class OpsWay_Varnishgento_Model_Index_Process extends Mage_Index_Model_Process
+class OpsWay_Varnishgento_Model_Rewrite_Index_Process extends Mage_Index_Model_Process
 {
     /**
      * Reindex all data what this process responsible is
@@ -25,5 +25,7 @@ class OpsWay_Varnishgento_Model_Index_Process extends Mage_Index_Model_Process
             Mage::dispatchEvent('application_clean_cache', array('tags' =>array('.*')));
             Mage::getSingleton('opsway_varnishgento/processor')->cleanCache();
         }
+
+        return $this;
     }
 }

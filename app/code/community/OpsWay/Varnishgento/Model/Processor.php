@@ -350,11 +350,7 @@ class OpsWay_Varnishgento_Model_Processor
     protected function _getCacheTagShortcuts()
     {
         if (is_null($this->_cacheTagShortcuts)) {
-            $this->_cacheTagShortcuts = array();
-            $path = 'global/opsway_varnishgento/cache_tag_shortcuts';
-            foreach (Mage::app()->getConfig()->getNode($path)->children() as $node) {
-                $this->_cacheTagShortcuts[(string)$node->source] = (string)$node->target;
-            }
+            $this->_cacheTagShortcuts = Mage::helper('opsway_varnishgento')->getListTagTypes();
         }
         return $this->_cacheTagShortcuts;
     }
