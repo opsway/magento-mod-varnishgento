@@ -23,7 +23,11 @@ class OpsWay_Varnishgento_Block_Ajaxify_Messages extends Mage_Core_Block_Message
        foreach ($this->_usedStorageTypes as $class_name) {
             $storage = Mage::getSingleton($class_name);
             if ($storage) {
-                $this->addMessages($storage->getMessages(true));
+                $messages = $storage->getMessages(true);
+                if ($messages->count() > 0) {
+                    Mage::helper('opsway_varnishgento')->addTags(OpsWay_Varnishgento_Model_Processor::NO_CACHE_TAG_NAME);
+                }
+                $this->addMessages($messages);
             }
         }
         Mage_Core_Block_Template::_prepareLayout();
