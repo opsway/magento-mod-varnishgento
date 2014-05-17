@@ -40,6 +40,7 @@ class OpsWay_Varnishgento_Model_Observer
 
     public function __construct(){
         $this->_helper = Mage::helper('opsway_varnishgento');
+        Mage::getSingleton('catalog/session')->setParamsMemorizeDisabled(true);
     }
 
 
