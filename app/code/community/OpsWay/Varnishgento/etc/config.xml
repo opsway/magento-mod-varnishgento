@@ -170,6 +170,14 @@
                     </ajaxify_oncart_add_cookie>
                 </observers>
             </core_session_abstract_add_message>
+            <controller_action_predispatch>
+                <observers>
+                    <controller_action_before>
+                        <class>opsway_varnishgento/observer</class>
+                        <method>disableCsrf</method>
+                    </controller_action_before>
+                </observers>
+            </controller_action_predispatch>
         </events>
         <layout>
             <updates>
